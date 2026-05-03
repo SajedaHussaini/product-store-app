@@ -6,9 +6,10 @@ export default function Sort({ value, onChange }) {
     <FormControl size="small" sx={{ width: 150, mr: 2 }}>
       <InputLabel>Sort by</InputLabel>
       <Select value={value} label="Sort by" onChange={e => onChange(e.target.value)}>
-        <MenuItem value="">Default</MenuItem>
+        <MenuItem value="">Featured</MenuItem>
         <MenuItem value="price-asc">Price: Low-High</MenuItem>
         <MenuItem value="price-desc">Price: High-Low</MenuItem>
+        <MenuItem value="price-desc">Rating: High → Low</MenuItem>
       </Select>
     </FormControl>
   );

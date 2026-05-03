@@ -14,7 +14,8 @@ export default function ProductCard({ product }) {
         <CardMedia
           component="img"
           height="180"
-          image={product.thumbnail}
+        //   image={product.thumbnail}
+          image={product.image || product.thumbnail}
           alt={product.title}
         />
         <CardContent>
