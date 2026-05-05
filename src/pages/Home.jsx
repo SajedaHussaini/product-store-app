@@ -81,15 +81,8 @@ export default function Home() {
 
       {/* 🛒 Products */}
       {data.products.length === 0 ? (
-        <EmptyState message="No products found!" />
+        <EmptyState message="No products found!"/>
       ) : gridView ? (
-        // <Grid container spacing={2} mt={1} justifyContent="center">
-        //   {data.products.map((product) => (
-        //     <Grid item key={product.id} xs={12} sm={6} md={3} lg={3}>
-        //       <ProductCard product={product} />
-        //     </Grid>
-        //   ))}
-        // </Grid>
         <Grid
   container
   spacing={3}
@@ -124,21 +117,6 @@ export default function Home() {
       )}
 
       {/* 📄 Pagination */}
-      {/* <Box display="flex" justifyContent="center" alignItems="center" mt={3}>
-        <Pagination
-          count={totalPages}
-          page={page}
-          color="primary"
-          size="large"
-          showFirstButton
-          showLastButton
-          onChange={(_, newPage) => setPage(newPage)}
-        />
-        <Typography sx={{ ml: 2 }}>
-          Page {page} of {totalPages}
-        </Typography>
-      </Box> */}
-
       <Box
   sx={{
     display: "flex",
@@ -166,20 +144,6 @@ export default function Home() {
     }}
   />
 
-  {/* <Typography
-    sx={{
-      fontSize: "0.8rem",
-      color: "text.secondary",
-      bgcolor: "background.paper",
-      px: 1.5,
-      py: 0.5,
-      borderRadius: 2,
-      border: "1px solid",
-      borderColor: "divider",
-    }}
-  >
-    {page} / {totalPages}
-  </Typography> */}
 </Box>
     </Box>
   );

@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import EmptyState from "../components/EmptyState";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
+import { useSnackbar } from "notistack";
 
 import {
   Box,
@@ -26,6 +27,20 @@ export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { enqueueSnackbar } = useSnackbar();
+    const handleAddToCart = () => {
+    dispatch(addItem(data));
+  
+    enqueueSnackbar("Added to cart!", {
+      variant: "success",
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "right",
+      },
+    });
+  };
+  
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["product", id],
@@ -128,7 +143,8 @@ export default function ProductDetails() {
               variant="contained"
               size="large"
               startIcon={<ShoppingCartIcon />}
-              onClick={() => dispatch(addItem(data))}
+              // onClick={() => dispatch(addItem(data))}
+              onClick={handleAddToCart}
               sx={{
                 mt: 3,
                 bgcolor: "primary.main",

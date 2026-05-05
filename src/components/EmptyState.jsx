@@ -1,12 +1,43 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import { Box, Typography, Button } from "@mui/material";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import { Link as RouterLink } from "react-router-dom";
 
-export default function EmptyState({ message }) {
+export default function EmptyState({ message, actionText, actionLink }) {
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" pt={4}>
-      <SentimentDissatisfiedIcon fontSize="large" color="disabled" />
-      <Typography color="textSecondary">{message}</Typography>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        py: 6,
+        textAlign: "center",
+      }}
+    >
+      <SentimentDissatisfiedIcon
+        sx={{ fontSize: 60, mb: 2 }}
+        color="disabled"
+      />
+
+      <Typography variant="h6" sx={{ mb: 1 }}>
+        {message}
+      </Typography>
+
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+        Try searching something else or go back to shopping
+      </Typography>
+
+      {actionText && (
+        <Button
+          variant="contained"
+          component={RouterLink}
+          to={actionLink || "/"}
+          sx={{ borderRadius: 2 }}
+        >
+          {actionText}
+        </Button>
+      )}
     </Box>
   );
 }

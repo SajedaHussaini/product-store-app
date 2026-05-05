@@ -20,39 +20,32 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InfoIcon from "@mui/icons-material/Info";
 import { useSettings } from "../context/SettingsContext";
+import { useSnackbar } from "notistack";
 
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
   const { state } = useSettings();
+  const { enqueueSnackbar } = useSnackbar();
+  const handleAddToCart = () => {
+  dispatch(addItem(product));
+
+  enqueueSnackbar("Added to cart!", {
+    variant: "success",
+    anchorOrigin: {
+      vertical: "top",
+      horizontal: "right",
+    },
+  });
+};
 
   const isGrid = state.gridView;
   const isDark = state.darkMode;
 
   return (
     <Card
-      // sx={{
-      //   width: "100%",
-      //   height: isGrid ? 380 : 220,   // ✅ مهم برای مساوی شدن
-      //   display: "flex",
-      //   flexDirection: isGrid ? "column" : "row",
-
-      //   borderRadius: 3,
-      //   overflow: "hidden",
-
-      //   bgcolor: isDark ? "#1e1e1e" : "#fff",
-
-      //   transition: "all 0.25s ease",
-      //   "&:hover": {
-      //     transform: "translateY(-6px)",
-      //     boxShadow: 6,
-      //   },
-      // }}
-
       sx={{
   width: "100%", 
-  // maxWidth: 400, 
-  // margin:"0 auto",
-// height: "100%", 
+
   height: isGrid ? 380 : 220,
   display: "flex",
   flexDirection: isGrid ? "column" : "row",
@@ -149,7 +142,8 @@ export default function ProductCard({ product }) {
           {/* ADD TO CART */}
           <Tooltip title="Add to cart">
             <Button
-              onClick={() => dispatch(addItem(product))}
+              // onClick={() => dispatch(addItem(product))}
+              onClick={handleAddToCart}
               sx={{
                 flex: 1,
                 minWidth:120,

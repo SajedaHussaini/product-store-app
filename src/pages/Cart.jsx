@@ -27,11 +27,32 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import EmptyCart from "../components/EmptyCart";
+import { useSnackbar } from "notistack";
 
 export default function Cart() {
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+const handleRemove = (id) => {
+  dispatch(removeItem(id));
+
+  enqueueSnackbar("Item removed from cart", {
+    variant: "info",
+  });
+};
+
+const handleClearCart = () => {
+  dispatch(clearCart());
+
+  enqueueSnackbar("Cart cleared", {
+    variant: "error",
+  });
+};
+
 
   const total = items.reduce(
     (t, it) => t + it.price * it.quantity,
@@ -40,16 +61,11 @@ export default function Cart() {
 
   if (!items.length)
     return (
-      <Box textAlign="center" mt={6}>
-        <Typography variant="h6">Your cart is empty 🛒</Typography>
-        <Button component={RouterLink} to="/" variant="contained" sx={{ mt: 2 }}>
-          Go Shopping
-        </Button>
-      </Box>
+    <EmptyCart/>
     );
 
   return (
-    <Box sx={{ maxWidth: 1100, mx: "auto", mt: 4, px: 2 }}>
+    <Box sx={{ maxWidth: 1100, mx: "auto", mt: 3, px: 2, mb:9 }}>
 
       {/* 🔙 HEADER */}
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
@@ -73,7 +89,7 @@ export default function Cart() {
 
         {/* 🛒 LEFT → ITEMS */}
         <Box sx={{ flex: 2 }}>
-          <Typography variant="h5" fontWeight={700} sx={{mb:5}}>
+          <Typography variant="h5" fontWeight={700} sx={{mb:4}}>
             Shopping Cart
           </Typography>
 
@@ -125,7 +141,8 @@ export default function Cart() {
                     <AddIcon fontSize="small" />
                   </IconButton>
 
-                  <IconButton onClick={() => dispatch(removeItem(item.id))}>
+                  {/* <IconButton onClick={() => dispatch(removeItem(item.id))}> */}
+                  <IconButton onClick={() => handleRemove(item.id)}>
                     <DeleteIcon color="error" />
                   </IconButton>
                 </Box>
@@ -160,10 +177,11 @@ export default function Cart() {
               Total: ${total}
             </Typography>
 
+            <Box sx={{display:"flex", gap:2}}>
             <Button
-              fullWidth
+              // fullWidth
               variant="contained"
-              sx={{ mb: 2, borderRadius: 2 }}
+              sx={{ mt: 2, borderRadius: 2, pl:1 }}
               component={RouterLink}
               to="/checkout"
             >
@@ -171,14 +189,16 @@ export default function Cart() {
             </Button>
 
             <Button
-              fullWidth
+              // fullWidth
               variant="outlined"
               color="error"
-              onClick={() => dispatch(clearCart())}
-              sx={{ borderRadius: 2 }}
+              // onClick={() => dispatch(clearCart())}
+              onClick={handleClearCart}
+              sx={{ mt: 2,borderRadius: 2 }}
             >
               Clear Cart
             </Button>
+            </Box>
           </Card>
         </Box>
 
@@ -187,32 +207,4 @@ export default function Cart() {
   );
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
