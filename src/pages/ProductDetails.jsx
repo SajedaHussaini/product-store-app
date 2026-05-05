@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Loader from "../components/Loader";
+// import Loader from "../components/Loader";
 import EmptyState from "../components/EmptyState";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
@@ -50,7 +50,9 @@ export default function ProductDetails() {
     },
   });
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return 
+  // <Loader />;
+  
   if (isError || !data)
     return <EmptyState message="Product not found" />;
 

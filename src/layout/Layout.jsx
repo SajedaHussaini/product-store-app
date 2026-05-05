@@ -20,17 +20,3 @@ export default function Layout() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

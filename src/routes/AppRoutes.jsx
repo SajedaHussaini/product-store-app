@@ -3,7 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "../layout/Layout"
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";
-import ProductDetails from "../pages/ProductDetails";
+// import ProductDetails from "../pages/ProductDetails";
+import ProductDetails from "../pages/ProductDetails"
 import Checkout from "../pages/Checkout";
 
 export default function AppRoutes() {

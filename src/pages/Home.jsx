@@ -48,7 +48,7 @@ export default function Home() {
   );
 
   if (isLoading) return <SkeletonGrid gridView={gridView} />;
-  if (isError) return <EmptyState message="Failed to load products" />;
+  if (isError) return <EmptyState message="Failed to load products"/>;
 
   const totalPages = Math.ceil((data.total || 0) / PAGE_SIZE);
 
@@ -81,7 +81,7 @@ export default function Home() {
 
       {/* 🛒 Products */}
       {data.products.length === 0 ? (
-        <EmptyState message="No products found!"/>
+        <EmptyState message="No products found!" showHint={true}/>
       ) : gridView ? (
         <Grid
   container

@@ -3,7 +3,7 @@ import { Box, Typography, Button } from "@mui/material";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import { Link as RouterLink } from "react-router-dom";
 
-export default function EmptyState({ message, actionText, actionLink }) {
+export default function EmptyState({ message, actionText, actionLink, showHint = false }) {
   return (
     <Box
       sx={{
@@ -24,9 +24,12 @@ export default function EmptyState({ message, actionText, actionLink }) {
         {message}
       </Typography>
 
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Try searching something else or go back to shopping
-      </Typography>
+      {/* 👇 فقط وقتی لازم بود نشان بده */}
+      {showHint && (
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          Try searching something else or adjust your search
+        </Typography>
+      )}
 
       {actionText && (
         <Button
