@@ -9,9 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SettingsProvider } from "./context/SettingsContext";
 
 import { BrowserRouter } from "react-router-dom";
-
-// 🟢 اضافه شد
-import { SnackbarProvider } from "notistack";
+import Toast from "./components/Toast";
 
 const queryClient = new QueryClient();
 
@@ -19,17 +17,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
-        
-        {/* 🟢 Toast Provider */}
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        >
+        <Toast>
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </SnackbarProvider>
-
+        </Toast>
       </SettingsProvider>
     </QueryClientProvider>
   </Provider>

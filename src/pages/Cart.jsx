@@ -16,10 +16,6 @@ import {
   Card,
   CardContent,
   Divider,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
 } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -37,37 +33,34 @@ export default function Cart() {
 
   const { enqueueSnackbar } = useSnackbar();
 
-const handleRemove = (id) => {
-  dispatch(removeItem(id));
+  const handleRemove = (id) => {
+    dispatch(removeItem(id));
+    enqueueSnackbar("Item removed from cart", { variant: "info" });
+  };
 
-  enqueueSnackbar("Item removed from cart", {
-    variant: "info",
-  });
-};
-
-const handleClearCart = () => {
-  dispatch(clearCart());
-
-  enqueueSnackbar("Cart cleared", {
-    variant: "error",
-  });
-};
-
+  const handleClearCart = () => {
+    dispatch(clearCart());
+    enqueueSnackbar("Cart cleared", { variant: "error" });
+  };
 
   const total = items.reduce(
     (t, it) => t + it.price * it.quantity,
     0
   );
 
-  if (!items.length)
-    return (
-    <EmptyCart/>
-    );
+  if (!items.length) return <EmptyCart />;
 
   return (
-    <Box sx={{ maxWidth: 1100, mx: "auto", mt: 3, px: 2, mb:9 }}>
-
-      {/* 🔙 HEADER */}
+    <Box
+      sx={{
+        maxWidth: 1100,
+        mx: "auto",
+        mt: { xs: 2, sm: 3 },
+        px: { xs: 1.5, sm: 2 },
+        mb: { xs: 6, md: 9 },
+      }}
+    >
+      {/* HEADER */}
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <Button
           startIcon={<ArrowBackIcon />}
@@ -78,18 +71,21 @@ const handleClearCart = () => {
         </Button>
       </Box>
 
-      {/* 🔥 MAIN LAYOUT */}
+      {/* MAIN LAYOUT */}
       <Box
         sx={{
           display: "flex",
-          gap: 3,
-          flexDirection: { xs: "column", md: "row" }, // ریسپانسیو
+          gap: { xs: 2, md: 3 },
+          flexDirection: { xs: "column", md: "row" },
         }}
       >
-
-        {/* 🛒 LEFT → ITEMS */}
+        {/*LEFT → ITEMS */}
         <Box sx={{ flex: 2 }}>
-          <Typography variant="h5" fontWeight={700} sx={{mb:4}}>
+          <Typography
+            variant="h5"
+            fontWeight={700}
+            sx={{ mb: { xs: 2, md: 4 }, fontSize: { xs: "1.3rem", md: "1.6rem" } }}
+          >
             Shopping Cart
           </Typography>
 
@@ -99,10 +95,12 @@ const handleClearCart = () => {
                 key={item.id}
                 sx={{
                   display: "flex",
-                  alignItems: "center",
-                  p: 2,
+                  flexDirection: { xs: "column", sm: "row" },
+                  alignItems: { xs: "flex-start", sm: "center" },
+                  p: { xs: 1.5, sm: 2 },
                   borderRadius: 3,
                   boxShadow: 1,
+                  gap: { xs: 1.5, sm: 2 },
                   transition: "0.2s",
                   "&:hover": {
                     boxShadow: 4,
@@ -113,11 +111,14 @@ const handleClearCart = () => {
                 <Avatar
                   src={item.thumbnail}
                   variant="rounded"
-                  sx={{ width: 80, height: 80, mr: 2 }}
+                  sx={{
+                    width: { xs: 70, sm: 90 },
+                    height: { xs: 70, sm: 90 },
+                  }}
                 />
 
-                <CardContent sx={{ flex: 1 }}>
-                  <Typography fontWeight={600}>
+                <CardContent sx={{ flex: 1, p: "0 !important" }}>
+                  <Typography fontWeight={600} noWrap>
                     {item.title}
                   </Typography>
 
@@ -130,7 +131,16 @@ const handleClearCart = () => {
                   </Typography>
                 </CardContent>
 
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                {/* CONTROLS */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    flexWrap: "wrap",
+                    mt: { xs: 1, sm: 0 },
+                  }}
+                >
                   <IconButton onClick={() => dispatch(decreaseQuantity(item.id))}>
                     <RemoveIcon fontSize="small" />
                   </IconButton>
@@ -141,7 +151,6 @@ const handleClearCart = () => {
                     <AddIcon fontSize="small" />
                   </IconButton>
 
-                  {/* <IconButton onClick={() => dispatch(removeItem(item.id))}> */}
                   <IconButton onClick={() => handleRemove(item.id)}>
                     <DeleteIcon color="error" />
                   </IconButton>
@@ -151,60 +160,63 @@ const handleClearCart = () => {
           </Box>
         </Box>
 
-        {/* 💳 RIGHT → SUMMARY */}
-        <Box sx={{ flex: 1, mt:{xs:2, md:8} }}>
+        {/*RIGHT → SUMMARY */}
+        <Box sx={{ flex: 1, mt: { xs: 2, md: 8 } }}>
           <Card
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               boxShadow: 2,
-              // position: "sticky",
-              // top: 20, 
-              alignItems:"flex-end"
             }}
           >
-            <Typography variant="h6" fontWeight={700} mb={2}>
+            <Typography
+              variant="h6"
+              fontWeight={700}
+              mb={2}
+              sx={{ fontSize: { xs: "1.1rem", md: "1.3rem" } }}
+            >
               Order Summary
             </Typography>
 
             <Divider sx={{ mb: 2 }} />
 
-            <Typography mb={1}>
-              Items: {items.length}
-            </Typography>
+            <Typography mb={1}>Items: {items.length}</Typography>
 
             <Typography variant="h6" fontWeight={700} mb={2}>
               Total: ${total}
             </Typography>
 
-            <Box sx={{display:"flex", gap:2}}>
-            <Button
-              // fullWidth
-              variant="contained"
-              sx={{ mt: 2, borderRadius: 2, pl:1 }}
-              component={RouterLink}
-              to="/checkout"
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                mt: 2,
+                flexDirection: { xs: "column", sm: "row", },
+              }}
             >
-              Checkout
-            </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ borderRadius: 2 }}
+                component={RouterLink}
+                to="/checkout"
+              >
+                Checkout
+              </Button>
 
-            <Button
-              // fullWidth
-              variant="outlined"
-              color="error"
-              // onClick={() => dispatch(clearCart())}
-              onClick={handleClearCart}
-              sx={{ mt: 2,borderRadius: 2 }}
-            >
-              Clear Cart
-            </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                color="error"
+                onClick={handleClearCart}
+                sx={{ borderRadius: 2, }}
+              >
+                Clear Cart
+              </Button>
             </Box>
           </Card>
         </Box>
-
       </Box>
     </Box>
   );
-
 }
-

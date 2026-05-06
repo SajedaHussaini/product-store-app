@@ -10,10 +10,12 @@ export default function Filter({ value, onChange }) {
       size="small"
       fullWidth
       sx={{
-        mr: 2,
+        mr: { xs: 0, sm: 2 },
+        mb: { xs: 0, sm: 0 },
 
         "& .MuiOutlinedInput-root": {
           borderRadius: "10px",
+          fontSize: { xs: 13, sm: 14 },
 
           "& fieldset": {
             borderColor: "#d0d0d0",
@@ -21,22 +23,27 @@ export default function Filter({ value, onChange }) {
           },
 
           "&:hover fieldset": {
-            borderColor: "#ff7a00",
+            borderColor: "primary.main",
           },
 
           "&.Mui-focused fieldset": {
-            borderColor: "#ff7a00",
+            borderColor: "primary.main",
             borderWidth: "1px",
           },
         },
       }}
     >
-      <InputLabel>Category</InputLabel>
+      <InputLabel sx={{ fontSize: { xs: 13, sm: 14 } }}>
+        Category
+      </InputLabel>
 
       <Select
         value={value}
         label="Category"
         onChange={(e) => onChange(e.target.value)}
+        sx={{
+          height: { xs: 36, sm: 40 },
+        }}
         MenuProps={{
           PaperProps: {
             sx: {
@@ -46,7 +53,8 @@ export default function Filter({ value, onChange }) {
               border: "1px solid #ffe0b2",
 
               "& .MuiMenuItem-root": {
-                fontSize: "14px",
+                fontSize: { xs: 13, sm: 14 },
+                minHeight: { xs: 34, sm: 40 },
                 transition: "0.2s",
 
                 "&:hover": {

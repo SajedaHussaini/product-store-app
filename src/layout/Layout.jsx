@@ -12,7 +12,6 @@ export default function Layout() {
     <>
       <Navbar />
       <Container sx={{ mt: 3 }}>
-      {/* <HeaderInfo/> */}
       {isHome && <HeaderInfo />}
         <Outlet />
       </Container>

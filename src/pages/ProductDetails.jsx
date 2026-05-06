@@ -2,7 +2,6 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-// import Loader from "../components/Loader";
 import EmptyState from "../components/EmptyState";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
@@ -18,6 +17,7 @@ import {
   Button,
   Chip,
   Divider,
+  CircularProgress,
 } from "@mui/material";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -27,20 +27,7 @@ export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { enqueueSnackbar } = useSnackbar();
-    const handleAddToCart = () => {
-    dispatch(addItem(data));
-  
-    enqueueSnackbar("Added to cart!", {
-      variant: "success",
-      anchorOrigin: {
-        vertical: "top",
-        horizontal: "right",
-      },
-    });
-  };
-  
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["product", id],
@@ -50,40 +37,62 @@ export default function ProductDetails() {
     },
   });
 
-  if (isLoading) return 
-  // <Loader />;
-  
+  const handleAddToCart = () => {
+    dispatch(addItem(data));
+    enqueueSnackbar("Added to cart!", {
+      variant: "success",
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "right",
+      },
+    });
+  };
+
+  if (isLoading)
+    return (
+      <Box display="flex" justifyContent="center" mt={10}>
+        <CircularProgress />
+      </Box>
+    );
+
   if (isError || !data)
     return <EmptyState message="Product not found" />;
 
   return (
     <Box
       sx={{
-        minHeight: "100vh",        // 👈 مهم برای فاصله بالا/پایین
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        // py: 5,                     // 👈 فاصله بالا و پایین
-        // px: 2,
-        mt:4,
-        mb:7,
+        mt: { xs: 2, md: 4 },
+        mb: { xs: 4, md: 7 },
+        px: { xs: 1, sm: 2 },
       }}
     >
-      {/* 🔙 BACK BUTTON */}
-      <Box sx={{ maxWidth: 1000, width: "100%", mx: "auto", mb: 2 }}>
+      {/*BACK BUTTON */}
+      <Box
+        sx={{
+          maxWidth: 1000,
+          width: "100%",
+          mx: "auto",
+          mb: { xs: 1, md: 2 },
+        }}
+      >
         <Button
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate(-1)}
           sx={{
             textTransform: "none",
             fontWeight: 600,
+            fontSize: { xs: 13, sm: 14 },
           }}
         >
           Back
         </Button>
       </Box>
 
-      {/* PRODUCT CARD */}
+      {/*PRODUCT CARD */}
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Card
           sx={{
@@ -96,23 +105,27 @@ export default function ProductDetails() {
             boxShadow: 6,
           }}
         >
-          {/* IMAGE */}
+          {/*IMAGE */}
           <CardMedia
             component="img"
             image={data.thumbnail}
             alt={data.title}
             sx={{
               width: { xs: "100%", md: 450 },
-              height: 450,
+              height: { xs: 260, sm: 320, md: 450 },
               objectFit: "contain",
-              p: 3,
+              p: { xs: 2, sm: 3 },
               bgcolor: "#f7f7f7",
             }}
           />
 
-          {/* CONTENT */}
-          <CardContent sx={{ flex: 1, p: 4 }}>
-
+          {/*CONTENT */}
+          <CardContent
+            sx={{
+              flex: 1,
+              p: { xs: 2, sm: 3, md: 4 },
+            }}
+          >
             <Chip
               label={data.category}
               color="primary"
@@ -120,24 +133,62 @@ export default function ProductDetails() {
               sx={{ mb: 2 }}
             />
 
-            <Typography variant="h4" fontWeight={700}>
+            <Typography
+              variant="h4"
+              fontWeight={700}
+              sx={{
+                fontSize: { xs: "1.4rem", sm: "1.8rem", md: "2rem" },
+              }}
+            >
               {data.title}
             </Typography>
 
-            <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-              <Rating value={data.rating} precision={0.1} readOnly />
-              <Typography sx={{ ml: 1, color: "text.secondary" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                mt: 1,
+              }}
+            >
+              <Rating
+                value={data.rating}
+                precision={0.1}
+                readOnly
+                size="small"
+              />
+              <Typography
+                sx={{
+                  ml: 1,
+                  color: "text.secondary",
+                  fontSize: { xs: 13, sm: 14 },
+                }}
+              >
                 {data.rating}
               </Typography>
             </Box>
 
             <Divider sx={{ my: 2 }} />
 
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{
+                mb: 3,
+                fontSize: { xs: 14, sm: 15 },
+                lineHeight: 1.7,
+              }}
+            >
               {data.description}
             </Typography>
 
-            <Typography variant="h5" fontWeight={700} color="primary">
+            <Typography
+              variant="h5"
+              fontWeight={700}
+              color="primary"
+              sx={{
+                fontSize: { xs: "1.3rem", sm: "1.6rem" },
+              }}
+            >
               ${data.price}
             </Typography>
 
@@ -145,20 +196,20 @@ export default function ProductDetails() {
               variant="contained"
               size="large"
               startIcon={<ShoppingCartIcon />}
-              // onClick={() => dispatch(addItem(data))}
               onClick={handleAddToCart}
               sx={{
                 mt: 3,
+                width: { xs: "100%", sm: "auto" },
                 bgcolor: "primary.main",
                 "&:hover": { bgcolor: "primary.dark" },
                 borderRadius: 2,
                 textTransform: "none",
-                px: 3,
+                px: { xs: 2, sm: 3 },
+                fontSize: { xs: 13, sm: 14 },
               }}
             >
               Add to Cart
             </Button>
-
           </CardContent>
         </Card>
       </Box>

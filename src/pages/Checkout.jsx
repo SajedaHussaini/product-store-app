@@ -16,8 +16,7 @@ import {
 
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../features/cart/cartSlice";
-import { Link as RouterLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const steps = ["Shipping Info", "Payment Method", "Review Order"];
 
@@ -82,8 +81,15 @@ export default function Checkout() {
 
   if (step === 3) {
     return (
-      <Box sx={{ maxWidth: 600, mx: "auto", mt: 6 }}>
-        <Card sx={{ p: 4, textAlign: "center", borderRadius: 3 }}>
+      <Box
+        sx={{
+          maxWidth: 600,
+          mx: "auto",
+          mt: { xs: 4, md: 6 },
+          px: 2,
+        }}
+      >
+        <Card sx={{ p: { xs: 3, md: 4 }, textAlign: "center", borderRadius: 3 }}>
           <Typography variant="h4" fontWeight={700}>
             Order Confirmed
           </Typography>
@@ -94,9 +100,7 @@ export default function Checkout() {
 
           <Divider sx={{ my: 2 }} />
 
-          <Typography variant="h6">
-            Total Paid: ${orderTotal}
-          </Typography>
+          <Typography variant="h6">Total Paid: ${orderTotal}</Typography>
 
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
             A confirmation message has been sent and your order will be processed soon.
@@ -106,8 +110,8 @@ export default function Checkout() {
             component={RouterLink}
             to="/"
             variant="contained"
-            color="success"   // ✅ changed to green
-            sx={{ mt: 3 }}
+            color="success"
+            sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}
           >
             Continue Shopping
           </Button>
@@ -117,9 +121,25 @@ export default function Checkout() {
   }
 
   return (
-    <Box sx={{ maxWidth: 750, mx: "auto", my: 6, px: 2 }}> {/* ✅ spacing added */}
-
-      <Stepper activeStep={step} alternativeLabel sx={{ mb: 4 }}>
+    <Box
+      sx={{
+        maxWidth: 750,
+        mx: "auto",
+        my: { xs: 3, md: 6 },
+        px: { xs: 2, sm: 3 },
+      }}
+    >
+      {/* STEPPER */}
+      <Stepper
+        activeStep={step}
+        alternativeLabel
+        sx={{
+          mb: { xs: 3, md: 4 },
+          "& .MuiStepLabel-label": {
+            fontSize: { xs: "12px", sm: "14px" },
+          },
+        }}
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
@@ -127,8 +147,7 @@ export default function Checkout() {
         ))}
       </Stepper>
 
-      <Card sx={{ p: 3, borderRadius: 3 }}>
-
+      <Card sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
         {/* SHIPPING */}
         {step === 0 && (
           <Box>
@@ -136,31 +155,55 @@ export default function Checkout() {
               Shipping Information
             </Typography>
 
-            <TextField fullWidth label="Full Name" sx={{ mb: 2 }}
+            <TextField
+              fullWidth
+              label="Full Name"
+              sx={{ mb: 2 }}
               value={shipping.fullName}
-              onChange={(e) => setShipping({ ...shipping, fullName: e.target.value })}
+              onChange={(e) =>
+                setShipping({ ...shipping, fullName: e.target.value })
+              }
               error={!!errors.fullName}
               helperText={errors.fullName}
             />
 
-            <TextField fullWidth label="Address" sx={{ mb: 2 }}
+            <TextField
+              fullWidth
+              label="Address"
+              sx={{ mb: 2 }}
               value={shipping.address}
-              onChange={(e) => setShipping({ ...shipping, address: e.target.value })}
+              onChange={(e) =>
+                setShipping({ ...shipping, address: e.target.value })
+              }
               error={!!errors.address}
               helperText={errors.address}
             />
 
-            <Box sx={{ display: "flex", gap: 2 }}>
-              <TextField fullWidth label="City"
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 2,
+              }}
+            >
+              <TextField
+                fullWidth
+                label="City"
                 value={shipping.city}
-                onChange={(e) => setShipping({ ...shipping, city: e.target.value })}
+                onChange={(e) =>
+                  setShipping({ ...shipping, city: e.target.value })
+                }
                 error={!!errors.city}
                 helperText={errors.city}
               />
 
-              <TextField fullWidth label="Postal Code"
+              <TextField
+                fullWidth
+                label="Postal Code"
                 value={shipping.postalCode}
-                onChange={(e) => setShipping({ ...shipping, postalCode: e.target.value })}
+                onChange={(e) =>
+                  setShipping({ ...shipping, postalCode: e.target.value })
+                }
                 error={!!errors.postalCode}
                 helperText={errors.postalCode}
               />
@@ -177,24 +220,44 @@ export default function Checkout() {
 
             <RadioGroup
               value={payment.method}
-              onChange={(e) => setPayment({ ...payment, method: e.target.value })}
+              onChange={(e) =>
+                setPayment({ ...payment, method: e.target.value })
+              }
             >
-              <FormControlLabel value="card" control={<Radio color="success" />} label="Credit Card" />
-              <FormControlLabel value="cod" control={<Radio color="success" />} label="Cash on Delivery" />
+              <FormControlLabel
+                value="card"
+                control={<Radio color="success" />}
+                label="Credit Card"
+              />
+              <FormControlLabel
+                value="cod"
+                control={<Radio color="success" />}
+                label="Cash on Delivery"
+              />
             </RadioGroup>
 
             {payment.method === "card" && (
               <>
-                <TextField fullWidth label="Card Number" sx={{ mt: 2 }}
+                <TextField
+                  fullWidth
+                  label="Card Number"
+                  sx={{ mt: 2 }}
                   value={payment.cardNumber}
-                  onChange={(e) => setPayment({ ...payment, cardNumber: e.target.value })}
+                  onChange={(e) =>
+                    setPayment({ ...payment, cardNumber: e.target.value })
+                  }
                   error={!!errors.cardNumber}
                   helperText={errors.cardNumber}
                 />
 
-                <TextField fullWidth label="Expire Date (MM/YY)" sx={{ mt: 2 }}
+                <TextField
+                  fullWidth
+                  label="Expire Date (MM/YY)"
+                  sx={{ mt: 2 }}
                   value={payment.expireDate}
-                  onChange={(e) => setPayment({ ...payment, expireDate: e.target.value })}
+                  onChange={(e) =>
+                    setPayment({ ...payment, expireDate: e.target.value })
+                  }
                   error={!!errors.expireDate}
                   helperText={errors.expireDate}
                 />
@@ -212,14 +275,17 @@ export default function Checkout() {
 
             <Typography fontWeight={600}>Shipping:</Typography>
             <Typography variant="body2">
-              {shipping.fullName}, {shipping.address}, {shipping.city}, {shipping.postalCode}
+              {shipping.fullName}, {shipping.address}, {shipping.city},{" "}
+              {shipping.postalCode}
             </Typography>
 
             <Divider sx={{ my: 2 }} />
 
             <Typography fontWeight={600}>Payment:</Typography>
             <Typography variant="body2">
-              {payment.method === "card" ? "Credit Card" : "Cash on Delivery"}
+              {payment.method === "card"
+                ? "Credit Card"
+                : "Cash on Delivery"}
             </Typography>
 
             <Divider sx={{ my: 2 }} />
@@ -233,16 +299,22 @@ export default function Checkout() {
 
             <Divider sx={{ my: 2 }} />
 
-            <Typography variant="h6">
-              Total: ${total}
-            </Typography>
+            <Typography variant="h6">Total: ${total}</Typography>
           </Box>
         )}
 
         {/* BUTTONS */}
-        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1.5, mt: 4 }}> {/* ✅ buttons closer */}
-
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "flex-end",
+            gap: 1.5,
+            mt: 4,
+          }}
+        >
           <Button
+            fullWidth
             onClick={() => {
               if (step === 0) navigate(-1);
               else setStep((s) => s - 1);
@@ -254,18 +326,17 @@ export default function Checkout() {
           </Button>
 
           {step < 2 && (
-            <Button variant="contained" color="success" onClick={nextStep}>
+            <Button fullWidth variant="contained" color="success" onClick={nextStep}>
               Next
             </Button>
           )}
 
           {step === 2 && (
-            <Button variant="contained" color="success" onClick={placeOrder}>
+            <Button fullWidth variant="contained" color="success" onClick={placeOrder}>
               Place Order
             </Button>
           )}
         </Box>
-
       </Card>
     </Box>
   );

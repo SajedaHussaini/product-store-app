@@ -6,8 +6,7 @@ export const getMuiTheme = (darkMode) =>
       mode: darkMode ? "dark" : "light",
 
       primary: {
-        // main: "#ff7a00", 
-        main: "#f79234", 
+        main: "#f79234",
       },
 
       background: {
@@ -24,9 +23,7 @@ export const getMuiTheme = (darkMode) =>
       MuiAppBar: {
         styleOverrides: {
           root: {
-            backgroundColor: "#ffffff", // سفید
-            // color: "#ff7a00",
-             // رنگ آیکن‌ها
+            backgroundColor: "#ffffff",
             color: "#f79234"
           },
         },
@@ -35,7 +32,6 @@ export const getMuiTheme = (darkMode) =>
       MuiIconButton: {
         styleOverrides: {
           root: {
-            // color: "#ff7a00",
             color: "#f79234"
           },
         },
@@ -44,8 +40,7 @@ export const getMuiTheme = (darkMode) =>
       MuiBadge: {
         styleOverrides: {
           badge: {
-            // backgroundColor: "#ff7a00",
-            backgroundColor:"#f79234",
+            backgroundColor: "#f79234",
             color: "#fff",
           },
         },

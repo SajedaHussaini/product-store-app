@@ -12,7 +12,6 @@ function App() {
   return (
     <ThemeProvider theme={getMuiTheme(state.darkMode)}>
       <CssBaseline />
-
       <AppRoutes />
     </ThemeProvider>
   );

@@ -9,13 +9,14 @@ export default function Toolbar({ children }) {
     <Box
       sx={{
         width: "100%",
-        mt: 3,
-        mb: 2,
-        px: 2,
-        py: 3,
+        mt: { xs: 2, sm: 3 },
+        mb: { xs: 4, sm: 4 },
+        px: { xs: 1.5, sm: 2 },
+        py: { xs: 2, sm: 3 },
 
         display: "flex",
-        gap: 2,
+        flexDirection: { xs: "column", sm: "row" },
+        gap: { xs: 1.5, sm: 2 },
         flexWrap: "wrap",
 
         border: "1px solid",
@@ -24,8 +25,14 @@ export default function Toolbar({ children }) {
         bgcolor: state.darkMode ? "#1a1a1a" : "#fff",
       }}
     >
-      {React.Children.map(children, (child) => (
-        <Box sx={{ flex: 1, minWidth: 180 }}>
+      {React.Children.map(children, (child, index) => (
+        <Box
+          key={index}
+          sx={{
+            flex: { xs: "1 1 100%", sm: "1 1 200px" },
+            minWidth: { xs: "100%", sm: 180 },
+          }}
+        >
           {child}
         </Box>
       ))}

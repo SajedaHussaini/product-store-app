@@ -9,10 +9,9 @@ const res = await axios.get(
 "https://dummyjson.com/products/categories"
 );
 
-// 👇 ساختار درست  
   const clean = res.data.map((cat) => ({  
-    value: cat.slug,   // برای API  
-    label: cat.name,   // برای نمایش  
+    value: cat.slug,   
+    label: cat.name,   
   }));  
 
   return [{ value: "all", label: "All" }, ...clean];  

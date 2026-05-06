@@ -12,13 +12,11 @@ const fetchProducts = async ({ queryKey }) => {
   params.append("limit", PAGE_SIZE);
   params.append("skip", (page - 1) * PAGE_SIZE);
 
-  // 🔍 SEARCH (اولویت بالا)
   if (search) {
     url = "https://dummyjson.com/products/search";
     params.set("q", search);
   }
 
-  // 📦 CATEGORY (اگر سرچ نیست)
   if (category && category !== "all" && !search) {
     url = `https://dummyjson.com/products/category/${category}`;
   }
@@ -27,7 +25,6 @@ const fetchProducts = async ({ queryKey }) => {
 
   let products = res.data.products || res.data;
 
-  // 🔃 SORT
   if (sortBy === "price-asc") {
     products = [...products].sort((a, b) => a.price - b.price);
   }

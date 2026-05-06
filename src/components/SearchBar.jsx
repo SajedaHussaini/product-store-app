@@ -10,25 +10,35 @@ export default function SearchBar({ value, onChange, onSubmit }) {
       onChange={(e) => onChange(e.target.value)}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
-          onSubmit(); // 🔥 فقط اینجا سرچ اجرا میشه
+          onSubmit();
         }
       }}
       size="small"
       sx={{
-        mr: 2,
+        mr: { xs: 0, sm: 2 },
+        mb: { xs: 0, sm: 0 },
+
         "& .MuiOutlinedInput-root": {
           borderRadius: "10px",
+          fontSize: { xs: 13, sm: 14 },
+
           "& fieldset": {
             borderColor: "#d0d0d0",
             borderWidth: "1px",
           },
+
           "&:hover fieldset": {
-            borderColor: "#ff7a00",
+            borderColor: "primary.main",
           },
+
           "&.Mui-focused fieldset": {
-            borderColor: "#ff7a00",
+            borderColor: "primary.main",
             borderWidth: "1px",
           },
+        },
+
+        "& .MuiInputLabel-root": {
+          fontSize: { xs: 13, sm: 14 },
         },
       }}
     />

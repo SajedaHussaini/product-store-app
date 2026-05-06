@@ -14,7 +14,6 @@ import {
   ListItem,
   Pagination,
   Box,
-  Typography,
 } from "@mui/material";
 
 const PAGE_SIZE = 12;
@@ -22,9 +21,8 @@ const PAGE_SIZE = 12;
 export default function Home() {
   const [page, setPage] = useState(1);
 
-  // 🔥 مهم
-  const [inputValue, setInputValue] = useState(""); // تایپ کاربر
-  const [search, setSearch] = useState(""); // مقدار واقعی برای API
+  const [inputValue, setInputValue] = useState("");
+  const [search, setSearch] = useState("");
 
   const [category, setCategory] = useState("all");
   const [sortBy, setSortBy] = useState("");
@@ -34,11 +32,11 @@ export default function Home() {
   } = useSettings();
 
   useEffect(() => {
-  if (inputValue === "") {
-    setSearch("");   // 🔥 پاک شدن نتایج
-    setPage(1);
-  }
-}, [inputValue]);
+    if (inputValue === "") {
+      setSearch("");
+      setPage(1);
+    }
+  }, [inputValue]);
 
   const { data, isLoading, isError } = useProducts(
     page,
@@ -48,21 +46,30 @@ export default function Home() {
   );
 
   if (isLoading) return <SkeletonGrid gridView={gridView} />;
-  if (isError) return <EmptyState message="Failed to load products"/>;
+  if (isError) return <EmptyState message="Failed to load products" />;
 
   const totalPages = Math.ceil((data.total || 0) / PAGE_SIZE);
 
   return (
-    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, mb:6, }}>
-      
-      {/* 🔍 Toolbar */}
-      <Toolbar>
-
+    <Box
+      sx={{
+        px: { xs: 1, sm: 2, md: 3 },
+        mb: 6,
+        maxWidth: "1400px",
+        mx: "auto",
+      }}
+    >
+      <Toolbar
+        sx={{
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "stretch",
+        }}
+      >
         <SearchBar
           value={inputValue}
           onChange={setInputValue}
           onSubmit={() => {
-            setSearch(inputValue); // 🔥 فقط اینجا سرچ اجرا میشه
+            setSearch(inputValue);
             setPage(1);
           }}
         />
@@ -76,75 +83,79 @@ export default function Home() {
         />
 
         <Sort value={sortBy} onChange={setSortBy} />
-
       </Toolbar>
 
-      {/* 🛒 Products */}
+      {/*PRODUCTS */}
       {data.products.length === 0 ? (
-        <EmptyState message="No products found!" showHint={true}/>
+        <EmptyState message="No products found!" showHint={true} />
       ) : gridView ? (
         <Grid
-  container
-  spacing={3}
-  justifyContent="center"
-  alignItems="stretch"
->
-  {data.products.map((product) => (
-    <Grid
-      item
-      key={product.id}
-      md={4}
-      lg={3}
-      xs={12}
-      sm={6}
-      
-//       md={6}
-// lg={4}
-      sx={{ display: "flex", justifyContent: "center", }}
-    >
-      <ProductCard product={product} />
-    </Grid>
-  ))}
-</Grid>
+          container
+          spacing={{ xs: 2, sm: 2, md: 3 }}
+          justifyContent="center"
+          alignItems="stretch"
+        >
+          {data.products.map((product) => (
+            <Grid
+              item
+              key={product.id}
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <ProductCard product={product} />
+            </Grid>
+          ))}
+        </Grid>
       ) : (
         <List>
           {data.products.map((product) => (
-            <ListItem key={product.id} >
+            <ListItem
+              key={product.id}
+              sx={{
+                px: { xs: 0, sm: 1 },
+              }}
+            >
               <ProductCard product={product} />
             </ListItem>
           ))}
         </List>
       )}
 
-      {/* 📄 Pagination */}
+      {/*PAGINATION */}
       <Box
-  sx={{
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 2,
-    mt: 4,
-    py: 2,
-  }}
->
-  <Pagination
-    count={totalPages}
-    page={page}
-    color="primary"
-    size="small"   // 👈 کوچکتر
-    showFirstButton
-    showLastButton
-    onChange={(_, newPage) => setPage(newPage)}
-    sx={{
-      "& .MuiPaginationItem-root": {
-        fontSize: "0.8rem",
-        minWidth: 30,
-        height: 30,
-      },
-    }}
-  />
-
-</Box>
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          mt: 4,
+          py: 2,
+          px: 1,
+          flexWrap: "wrap",
+        }}
+      >
+        <Pagination
+          count={totalPages}
+          page={page}
+          color="primary"
+          size="small"
+          showFirstButton
+          showLastButton
+          onChange={(_, newPage) => setPage(newPage)}
+          sx={{
+            "& .MuiPaginationItem-root": {
+              fontSize: { xs: "0.65rem", sm: "0.85rem" },
+              minWidth: { xs: 20, sm: 32 },
+              height: { xs: 20, sm: 32 },
+            },
+          }}
+        />
+      </Box>
     </Box>
   );
 }
