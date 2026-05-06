@@ -1,6 +1,4 @@
-Nexora Store
-
-Project Description
+<b>Nexora Store </b>
 
 Nexora Store is a modern and responsive e-commerce web application built with React. It allows users to browse products, search and filter items, view product details, and manage a shopping cart with a smooth and user-friendly interface.
 
