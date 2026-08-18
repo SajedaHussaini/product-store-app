@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  {  useState } from "react";
 import { useProducts } from "../hooks/useProducts";
 import ProductCard from "../components/ProductCard";
 import SkeletonGrid from "../components/SkeletonGrid";
@@ -31,12 +31,12 @@ export default function Home() {
     state: { gridView },
   } = useSettings();
 
-  useEffect(() => {
-    if (inputValue === "") {
-      setSearch("");
-      setPage(1);
-    }
-  }, [inputValue]);
+  // useEffect(() => {
+  //   if (inputValue === "") {
+  //     setSearch("");
+  //     setPage(1);
+  //   }
+  // }, [inputValue]);
 
   const { data, isLoading, isError } = useProducts(
     page,

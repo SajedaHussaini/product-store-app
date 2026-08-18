@@ -1,11 +1,11 @@
-import React from "react";
+// import React from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Card,
   CardActionArea,
-  CardMedia,
+  // CardMedia,
   CardContent,
   Typography,
   CardActions,
